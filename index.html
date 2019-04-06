@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MC Clicker</title>
+    <style>
+        body {
+            background-color: #B46A57;
+            text-align: center;
+            color: white;
+        }
+       
+        #Instellingen {
+            background-color: orange;
+            color: black;
+            padding: 20px;
+            text-align: center;
+        }
+       
+        #AG {
+            background-color: orange;
+            color: black;
+            padding: 7px;
+            text-align: center;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="https://mcclicker.ga/icon.png">
+</head>
+ 
+<body>
+<br>
+<img src="https://mcclicker.ga/logo.png" height="150px">
+    <h1 id="BlockAmount"></h1>
+    <h2 id="BlockPerSecond"></h2>
+    <div id="block" style="cursor:pointer" onclick="blockClicked();"><img id="imageid" src="https://mcclicker.ga/icon.png" height="200px"></div>
+    <br>
+    <button onclick="getAutoClicker();">Upgrade BPS voor <span id="AutoClickBlockCost"></span> blokken</button>
+    <p>Gebruik deze knop om het aantal automatische blokken per seconde te upgraden.<br> U kunt dit kopen voor het aantal blokken wat er vermeld staat.</p>
+    <script language="javascript">
+        //block loader
+        function getBlockValue(a) {
+            var b = document.block.match('(^|[^;]+)\\s*' + a + '\\s*=\\s*([^;]+)');
+            return b ? b.pop() : '';
+        }
+ 
+        //blockclickers loader from block
+        var blockClicks = 0;
+        if (document.block.indexOf("blocksclicked=") >= 0) {
+            blockClicks = parseInt(getBlockValue("blocksclicked"));
+        }
+ 
+        //autoclicker loader from block
+        var AutoClickers = 0;
+        if (document.block.indexOf("autoclickers=") >= 0) {
+            AutoClickers = parseFloat(getBlockValue("autoclickers"));
+        }
+        var AutoClickerCost = 50;
+        if (document.block.indexOf("autoclickerskost=") >= 0) {
+            AutoClickerCost = parseFloat(getBlockValue("autoclickerskost"));
+        }
+       
+        //processes block click and adds it to total.
+        function blockClicked() {
+            blockClicks++;
+            document.block = "blocksclicked=" + blockClicks;
+        }
+       
+        //purchases Auto Clicker for Player and removes blocks
+        function getAutoClicker() {
+            if (blockClicks >= AutoClickerCost) {
+                AutoClickers++;
+                document.block = "autoclickers=" + AutoClickers;
+                blockClicks -= AutoClickerCost;
+                AutoClickerCost += Math.floor(AutoClickerCost * .3);
+                document.block = "autoclickerskost=" + AutoClickerCost;
+            } else {
+                alert("Opgelet! Je hebt " + AutoClickerCost + " blokken nodig, en je hebt nu maar " + (blockClicks) + " blokken!")
+            }
+        }
+ 
+        //update de autoclickers
+        var AutoClickTimer = setInterval(function() {
+            AutoClickBlock()
+        }, 2000);
+ 
+        function AutoClickBlock() {
+            blockClicks += AutoClickers;
+            document.block = "blocksclicked=" + blockClicks;
+        }
+       
+        //update de website variables
+        var BlockClickTimer = setInterval(function() {
+            updateBlock()
+        }, 100);
+ 
+        function updateBlock() {
+            //calculate BPS
+            var BPS = (AutoClickers * .5);
+            document.getElementById("BlockAmount").innerHTML = blockClicks + " blokken";
+            document.getElementById("BlockPerSecond").innerHTML = BPS + " BPS";
+            document.getElementById("AutoClickBlockCost").innerHTML = AutoClickerCost;
+        }
+ 
+        //hieronder staan de achtergrond instellingen
+    </script>
+<h2>MC Clicker Settings</h2>
+    <h3 id="AG">Achtergronden</h3>
+ 
+    <button class="whiteButton" type="button" onClick="startstopDisco(false);bgStandaard()">Standaard</button>
+    <button class="whiteButton" type="button" onClick="startstopDisco(false);bgBlack()">Zwart</button>
+ 
+    <button class="maroonButton" type="button" onClick="startstopDisco(false);bgMaroon()">Rood</button>
+ 
+    <button class="blueButton" type="button" onClick="startstopDisco(false);bgBlue()">Blauw</button>
+ 
+    <button class="greenButton" type="button" onClick="startstopDisco(false);bgGreen()">Groen</button>
+ 
+    <button class="pinkButton" type="button" onClick="startstopDisco(false);bgPink()">Roze</button>
+   
+    <button class="discoButton" type="button" onClick="startstopDisco(true)">Disco</button>
+   
+    <h3 id="AG">Blok Type</h3>
+    <button class="whiteButton" type="button" onClick="document.getElementById('imageid').src='https://mcclicker.ga/icon.png'">Grassblock</button>
+    <button class="whiteButton" type="button" onClick="document.getElementById('imageid').src='https://mcclicker.ga/stone.png'">Stone</button>
+    <button class="whiteButton" type="button" onClick="document.getElementById('imageid').src='https://mcclicker.ga/wood.png'">Wood</button>
+    <button class="whiteButton" type="button" onClick="document.getElementById('imageid').src='https://mcclicker.ga/lapiz.png'">Lapiz</button>
+    <button class="whiteButton" type="button" onClick="document.getElementById('imageid').src='https://mcclicker.ga/iron.png'">Iron</button>
+    <button class="whiteButton" type="button" onClick="document.getElementById('imageid').src='https://mcclicker.ga/gold.png'">Gold</button>
+    <button class="whiteButton" type="button" onClick="document.getElementById('imageid').src='https://mcclicker.ga/diamond.png'">Diamond</button>
+    <button class="whiteButton" type="button" onClick="document.getElementById('imageid').src='https://mcclicker.ga/emerald.png.png'">Emerald</button>
+    <button class="whiteButton" type="button" onClick="document.getElementById('imageid').src='https://mcclicker.ga/barrier.png'">Barrier</button>
+    <script type="text/javascript">
+        function bgStandaard() {
+            document.body.style.backgroundColor = "#B46A57";
+        }
+ 
+        function bgBlack() {
+            document.body.style.backgroundColor = "Black";
+        }
+ 
+        function bgMaroon() {
+            document.body.style.backgroundColor = "maroon";
+        }
+ 
+        function bgBlue() {
+            document.body.style.backgroundColor = "darkblue";
+        }
+ 
+        function bgGreen() {
+            document.body.style.backgroundColor = "darkgreen";
+        }
+ 
+        function bgPink() {
+            document.body.style.backgroundColor = " deeppink";
+        }
+       
+        var steps = 50;
+        var speed = 50;
+        var tt;
+        var ck = steps;
+        var oz = 'rgb(' + newColor() + ',' + newColor() + ',' + newColor() + ')';
+       
+        var started = false;
+       
+        function startstopDisco(start) {
+            if (start == true) {
+                if (started == false) {
+                    if (typeof e === 'undefined') {
+                        bgDisco(oz);
+                    } else {
+                        fade();
+                    }
+                    started = true;
+                }
+            } else {
+                if (started == true) {
+                    clearTimeout(tt);
+                    started = false;
+                }
+            }
+        }
+ 
+        function newColor() {
+            return Math.round(Math.random() * 255)
+        }
+ 
+        function dif(a, b) {
+            return (Number(b) + Number(a))
+        }
+ 
+        function bgDisco(z) {
+            oz = 'rgb(' + newColor() + ',' + newColor() + ',' + newColor() + ')';
+            n = oz.substring(4, oz.length - 1).split(',');
+            document.body.style.backgroundColor = z;
+            o = z.substring(4, z.length - 1).split(',');
+            e = [Math.round((n[0] - o[0]) / steps), Math.round((n[1] - o[1]) / steps), Math.round((n[2] - o[2]) / steps)];
+            tt = setTimeout("fade()", speed)
+        }
+ 
+        function fade() {
+            d = [dif(e[0], o[0]), dif(e[1], o[1]), dif(e[2], o[2])]
+            z = 'rgb(' + d[0] + ',' + d[1] + ',' + d[2] + ')';
+            tz = 'rgb(' + (255 - d[0]) + ',' + (255 - d[1]) + ',' + (255 - d[2]) + ')'
+            document.body.style.backgroundColor = z;
+            o = z.substring(4, z.length - 1).split(',');
+            ck--;
+            if (ck != 0) {
+                tt = setTimeout("fade()", speed)
+            } else {
+                ck = steps;
+                bgDisco(z)
+            }
+        }
+    </script>
+    <p>&copy; 2019 mcclicker.ga<p><button id="creditbutton" type="button" onclick="getElementById('spoiler').style.display = 'block'; this.style.display = 'none'">Credits</button>
+    <div id="spoiler" style="display:none">
+    <b>Made by Nielskeuh.<br>www.conjurecraft.nl<br>niels@conjurecraft.nl<br>DC: Nielskeuh#4085</b>
+    </div>
+</body>
+</html>
